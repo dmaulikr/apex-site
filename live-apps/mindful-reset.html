@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>60-Second Mindful Reset · Seal a Worry & Set Today's Vow</title>
+  <meta name="description" content="Free 60-second interactive mental reset ritual powered by The Worry Jar, QuietPage, Tend Garden, and Onward." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 50% 25%, rgba(16,185,129,0.22), rgba(5,7,15,0.98) 65%), #05070f;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
+    }
+    .card {
+      max-width: 580px; width: 100%;
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(28px);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 24px; padding: 28px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.18);
+      text-align: center;
+    }
+    .orb {
+      width: 96px; height: 96px; margin: 0 auto 18px; border-radius: 50%;
+      background: radial-gradient(circle, #34d399, #059669 60%, transparent 72%);
+      box-shadow: 0 0 40px rgba(16,185,129,0.5);
+      animation: breathe 6s ease-in-out infinite;
+      display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #04130e;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(0.88); opacity: 0.8; }
+      50% { transform: scale(1.18); opacity: 1; }
+    }
+    input, textarea {
+      width: 100%; padding: 13px 15px; border-radius: 14px;
+      background: rgba(4, 7, 15, 0.85); border: 1px solid rgba(255,255,255,0.16);
+      color: #f8fafc; font-size: 14.5px; margin: 12px 0; outline: none;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 20px; border-radius: 14px; font-size: 14px; font-weight: 800;
+      background: linear-gradient(135deg, #10b981, #059669); color: #03150e;
+      border: none; cursor: pointer; text-decoration: none; width: 100%; margin-top: 8px;
+    }
+    .apps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; text-align: left; }
+    .app-pill {
+      padding: 11px 13px; border-radius: 12px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12); text-decoration: none; color: #f8fafc; display: block;
+    }
+    .app-pill:hover { border-color: #34d399; background: rgba(16,185,129,0.12); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="orb" id="breath-orb">Inhale 4s</div>
+    <h1 style="font-size:24px;font-weight:800;margin-bottom:6px">60-Second Mindful Unload</h1>
+    <p style="font-size:13.5px;color:#94a3b8;margin-bottom:14px">
+      Don't carry today's exhaustion into tonight. Seal 1 heavy thought into the jar below and watch your mind clear.
+    </p>
+    <div id="step-1">
+      <textarea id="worry-input" rows="2" placeholder="Type one worry, pressure, or unfinished task weighing on you right now..."></textarea>
+      <button class="btn" onclick="sealWorry()">🫙 Seal Inside The Worry Jar &amp; Release</button>
+    </div>
+    <div id="step-2" style="display:none;padding:16px 0">
+      <div style="font-size:18px;font-weight:800;color:#6ee7b7;margin-bottom:6px">✨ Sealed &amp; Released From Your Active RAM</div>
+      <p style="font-size:13.5px;color:#cbd5e1;margin-bottom:14px">
+        Your thought is safely stored away so you can rest. Keep this calm ritual on your iPhone with our 4 free, privacy-first iOS apps:
+      </p>
+      <div class="apps-grid">
+        <a class="app-pill" href="https://apps.apple.com/us/app/the-worry-jar/id6767879136" target="_blank">
+          <div style="font-weight:800;font-size:13.5px">🫙 The Worry Jar</div>
+          <div style="font-size:11.5px;color:#94a3b8">Seal anxious thoughts on iOS →</div>
+        </a>
+        <a class="app-pill" href="https://apps.apple.com/us/app/quietpage-journal/id6774216806" target="_blank">
+          <div style="font-weight:800;font-size:13.5px">📖 QuietPage Journal</div>
+          <div style="font-size:11.5px;color:#94a3b8">Private evening reflection →</div>
+        </a>
+        <a class="app-pill" href="https://apps.apple.com/us/app/tend-garden/id6768056018" target="_blank">
+          <div style="font-weight:800;font-size:13.5px">🌱 Tend Garden</div>
+          <div style="font-size:11.5px;color:#94a3b8">Gentle, streak-free habits →</div>
+        </a>
+        <a class="app-pill" href="https://dmaulikr.github.io/onward/" target="_blank">
+          <div style="font-weight:800;font-size:13.5px">🔥 Onward Vow</div>
+          <div style="font-size:11.5px;color:#94a3b8">One sacred daily promise →</div>
+        </a>
+      </div>
+      <button class="btn" style="margin-top:14px;background:rgba(255,255,255,0.1);color:#fff" onclick="location.reload()">↻ Release Another Thought</button>
+    </div>
+  </div>
+  <script>
+    const orb = document.getElementById('breath-orb');
+    let inhale = true;
+    setInterval(() => {
+      inhale = !inhale;
+      orb.textContent = inhale ? 'Inhale 4s' : 'Exhale 4s';
+    }, 3000);
+    function sealWorry() {
+      document.getElementById('step-1').style.display = 'none';
+      document.getElementById('step-2').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

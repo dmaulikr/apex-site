@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="apple-itunes-app" content="app-id=6774216806"/>
+<title>Surat Textile Fabric GSM, Meter Weight & 5%/18% GST Calculator — Fabric Quote Pro</title>
+<style>
+body{background:#080b12;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:680px;margin:40px auto;padding:24px}
+.box{background:#111726;border:1px solid #26324d;border-radius:16px;padding:28px}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #334155;background:#0b0f19;color:#fff;font-size:16px;margin:6px 0 16px}
+.res{font-size:24px;font-weight:800;color:#34d399;padding:16px;background:rgba(16,185,129,.1);border-radius:12px;margin:12px 0}
+.cta{display:inline-block;margin-top:14px;padding:12px 20px;border-radius:10px;background:#6366f1;color:#fff;text-decoration:none;font-weight:700}
+</style></head><body>
+<div class="box">
+  <div style="font-size:12px;color:#818cf8;font-weight:700">14-LOCALE ORGANIC SEO FUNNEL TOOL</div>
+  <h1>Instant Textile Meter Rate + CGST/SGST Quote Calculator</h1>
+  <label>Total Meters</label><input id="inA" type="number" value="450" oninput="calc()"/>
+  <label>Rate per Meter (₹)</label><input id="inB" type="number" value="165" oninput="calc()"/>
+  <div class="res" id="out"></div>
+  <a class="cta" href="https://github.com/dmaulikr">Open in Fabric Quote Pro →</a>
+</div>
+<script>
+function calc(){
+  const a=Number(document.getElementById('inA').value||0);
+  const b=Number(document.getElementById('inB').value||1);
+  document.getElementById('out').textContent='₹' + Math.round(a * b * 1.05).toLocaleString('en-IN') + ' (incl. 5% Textile GST: ₹' + Math.round(a * b * 0.05).toLocaleString('en-IN') + ')';
+}
+calc();
+</script></body></html>

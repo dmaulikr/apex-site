@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aithelian Labs · Mindful iOS Apps & 24-Hour Swift Engineering Sprints</title>
+  <meta name="description" content="4 Live iOS App Store apps (QuietPage, Tend Garden, The Worry Jar, Onward) + Free iOS App Store Rejection Scanner & 24-Hour SwiftUI/LiDAR Engineering Sprints by Maulik Desai." />
+  <style>
+    :root {
+      --bg: #05070f;
+      --card: rgba(15, 23, 42, 0.72);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --emerald: #10b981;
+      --indigo: #6366f1;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 15% 15%, rgba(99,102,241,0.18), transparent 45%),
+                  radial-gradient(circle at 85% 20%, rgba(16,185,129,0.16), transparent 45%),
+                  radial-gradient(circle at 50% 85%, rgba(245,158,11,0.12), transparent 50%),
+                  #05070f;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+      min-height: 100vh;
+      padding: 32px 20px 64px;
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+      background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7;
+    }
+    h1 { font-size: clamp(28px, 4.5vw, 46px); font-weight: 800; letter-spacing: -0.03em; margin: 14px 0 10px; }
+    .lead { font-size: 17px; color: #cbd5e1; max-width: 760px; margin-bottom: 28px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 18px; margin-bottom: 32px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 36px; }
+    .glass {
+      background: var(--card);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.14);
+      border-radius: 20px; padding: 22px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 14px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .glass:hover { transform: translateY(-3px); border-color: rgba(16,185,129,0.5); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 11px 18px; border-radius: 12px; font-size: 13.5px; font-weight: 700;
+      text-decoration: none; cursor: pointer; border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06); color: #fff; transition: all 0.18s ease;
+    }
+    .btn-primary { background: linear-gradient(135deg, #10b981, #059669); border-color: #34d399; color: #04130e; }
+    .btn-indigo { background: linear-gradient(135deg, #6366f1, #4f46e5); border-color: #818cf8; color: #fff; }
+    .sec-title { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .sec-sub { font-size: 13.5px; color: var(--muted); margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="pill">● LIVE PUBLIC STUDIO HUB · AITHELIAN LABS</span>
+    <h1>Crafted for Quiet Minds.<br/>Engineered for Zero-Defect iOS Releases.</h1>
+    <p class="lead">
+      Explore our 4 live Apple App Store apps designed for calm, focus, and daily intentionality—or use our free interactive iOS engineering tools below.
+    </p>
+
+    <!-- FREE INTERACTIVE VIRAL EXPERIENCE + B2B MAGNETS -->
+    <div class="sec-title">✨ Try Our Free Interactive Web Experiences (No Login Required)</div>
+    <div class="sec-sub">Built to help you reset your mind in 60 seconds—or pass Apple App Review on the first submission.</div>
+    <div class="grid-2">
+      <div class="glass" style="border-color:rgba(16,185,129,0.45)">
+        <div>
+          <span class="pill" style="margin-bottom:10px">🧘‍♂️ 60-Second Interactive Mindful Ritual</span>
+          <h3 style="font-size:20px;font-weight:800;margin-bottom:6px">Release 1 Worry · Plant 1 Seed · Set 1 Daily Vow</h3>
+          <p style="font-size:13.5px;color:#cbd5e1">
+            Feeling overwhelmed or exhausted? Type a heavy thought and watch it dissolve into starlight, take 3 guided breaths, and lock your single focus for today.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="./mindful-reset.html">✨ Start 60-Second Mindful Ritual →</a>
+      </div>
+
+      <div class="glass" style="border-color:rgba(99,102,241,0.45)">
+        <div>
+          <span class="pill" style="background:rgba(99,102,241,0.16);border-color:rgba(99,102,241,0.45);color:#c7d2fe;margin-bottom:10px">🛡 Free iOS Founder Diagnostic Tool</span>
+          <h3 style="font-size:20px;font-weight:800;margin-bottom:6px">iOS App Store Rejection &amp; ITMS-91053 Scanner</h3>
+          <p style="font-size:13.5px;color:#cbd5e1">
+            Paste your <code>PrivacyInfo.xcprivacy</code>, <code>Info.plist</code>, or StoreKit/RevenueCat Paywall view to catch Guideline 3.1.2, 2.1, and CA92.1 rejection traps in 5 seconds.
+          </p>
+        </div>
+        <a class="btn btn-indigo" href="./scanner.html">🔍 Launch Free App Store Scanner →</a>
+      </div>
+    </div>
+
+    <!-- 4 LIVE iOS APP STORE APPS -->
+    <div class="sec-title">🍎 4 Live iOS Apps on the Apple App Store</div>
+    <div class="sec-sub">100% privacy-first, zero ads, zero data tracking, crafted with native SwiftUI &amp; tactile haptics.</div>
+    <div class="grid-4">
+      <div class="glass">
+        <div>
+          <div style="font-size:26px;margin-bottom:6px">📖</div>
+          <h3 style="font-size:17px;font-weight:800">QuietPage Journal</h3>
+          <p style="font-size:12.5px;color:#cbd5e1;margin-top:4px">Minimalist, distraction-free private reflection &amp; evening mental unload.</p>
+        </div>
+        <a class="btn btn-primary" href="https://apps.apple.com/us/app/quietpage-journal/id6774216806" target="_blank">🍎 Download on App Store</a>
+      </div>
+
+      <div class="glass">
+        <div>
+          <div style="font-size:26px;margin-bottom:6px">🌱</div>
+          <h3 style="font-size:17px;font-weight:800">Tend Garden</h3>
+          <p style="font-size:12.5px;color:#cbd5e1;margin-top:4px">Gentle habit &amp; relationship tending without toxic streak-shame.</p>
+        </div>
+        <a class="btn btn-primary" href="https://apps.apple.com/us/app/tend-garden/id6768056018" target="_blank">🍎 Download on App Store</a>
+      </div>
+
+      <div class="glass">
+        <div>
+          <div style="font-size:26px;margin-bottom:6px">🫙</div>
+          <h3 style="font-size:17px;font-weight:800">The Worry Jar</h3>
+          <p style="font-size:12.5px;color:#cbd5e1;margin-top:4px">Seal anxious thoughts inside a tactile glass jar so your mind can rest.</p>
+        </div>
+        <a class="btn btn-primary" href="https://apps.apple.com/us/app/the-worry-jar/id6767879136" target="_blank">🍎 Download on App Store</a>
+      </div>
+
+      <div class="glass">
+        <div>
+          <div style="font-size:26px;margin-bottom:6px">🔥</div>
+          <h3 style="font-size:17px;font-weight:800">Onward Daily Vow</h3>
+          <p style="font-size:12.5px;color:#cbd5e1;margin-top:4px">One sacred daily promise kept—zero clutter, pure forward momentum.</p>
+        </div>
+        <a class="btn btn-primary" href="https://dmaulikr.github.io/onward/" target="_blank">🌐 Visit Onward Hub</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

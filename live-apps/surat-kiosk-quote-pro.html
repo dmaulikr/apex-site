@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Surat Textile & Marble Showroom Kiosk · Live Web Twin</title>
+<style>
+  * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif; }
+  body { margin: 0; background: #050811; color: #f8fafc; padding: 22px; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; background: rgba(245,158,11,0.18); color: #fbbf24; border: 1px solid rgba(245,158,11,0.45); }
+  .card { background: rgba(15,23,42,0.92); border: 1px solid rgba(148,163,184,0.22); border-radius: 14px; padding: 18px; margin-top: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  label { display: block; font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
+  input, select { width: 100%; padding: 9px 11px; border-radius: 8px; border: 1px solid #334155; background: #090d16; color: #f8fafc; font-size: 14px; font-weight: 700; }
+  .kpi { padding: 13px; border-radius: 11px; background: rgba(245,158,11,0.10); border: 1px solid rgba(245,158,11,0.35); }
+  .v { font-size: 22px; font-weight: 900; color: #fbbf24; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">🟢 LIVE WEB UPDATED · PHASE 3 TWIN OF fabric_quote_pro + ParchiAI</span>
+  <h1 style="margin:8px 0 4px;font-size:22px">🧾 Surat Textile, Diamond &amp; Marble Showroom Instant GST Quote Kiosk</h1>
+  <div style="font-size:13px;color:#94a3b8">Live web &amp; iPad kiosk twin combining <code>fabric_quote_pro</code> + <code>ParchiAI</code> — calculates GSM/Meters/Wastage + GST and generates a 1-tap WhatsApp Invoice.</div>
+
+  <div class="card">
+    <div class="grid">
+      <div><label>Order Quantity (Meters / Units)</label><input id="q" type="number" value="1250" oninput="u()"/></div>
+      <div><label>Base Rate per Meter (₹ INR)</label><input id="r" type="number" value="142" oninput="u()"/></div>
+      <div><label>Process / Dyeing Wastage (%)</label><input id="w" type="number" value="4.5" step="0.5" oninput="u()"/></div>
+      <div><label>GST Slab (%)</label><select id="g" onchange="u()"><option value="5">5% Textile GST</option><option value="18">18% Commercial / Marble GST</option></select></div>
+    </div>
+    <div class="grid" style="margin-top:14px">
+      <div class="kpi"><div style="font-size:11px;color:#fde68a;font-weight:700">SUBTOTAL (WITH WASTAGE)</div><div class="v" id="sub">₹1,85,488</div></div>
+      <div class="kpi"><div style="font-size:11px;color:#fde68a;font-weight:700">GST TAX AMOUNT</div><div class="v" id="gst">₹9,274</div></div>
+      <div class="kpi"><div style="font-size:11px;color:#fde68a;font-weight:700">FINAL WHATSAPP INVOICE</div><div class="v" id="tot">₹1,94,762</div></div>
+    </div>
+  </div>
+</div>
+<script>
+function u() {
+  const q = parseFloat(document.getElementById('q').value) || 0;
+  const r = parseFloat(document.getElementById('r').value) || 0;
+  const w = parseFloat(document.getElementById('w').value) || 0;
+  const g = parseFloat(document.getElementById('g').value) || 5;
+  const sub = q * r * (1 + w/100);
+  const gst = sub * (g/100);
+  const tot = sub + gst;
+  document.getElementById('sub').textContent = '₹' + Math.round(sub).toLocaleString('en-IN');
+  document.getElementById('gst').textContent = '₹' + Math.round(gst).toLocaleString('en-IN');
+  document.getElementById('tot').textContent = '₹' + Math.round(tot).toLocaleString('en-IN');
+}
+u();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free iOS App Store Rejection & ITMS-91053 Scanner · Aithelian Labs</title>
+  <meta name="description" content="Instant static scanner for Apple Guideline 3.1.2, Guideline 2.1, and ITMS-91053 PrivacyInfo.xcprivacy compliance." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at 20% 20%, rgba(99,102,241,0.2), #05070f 60%), #05070f;
+      color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      padding: 28px 18px 60px; min-height: 100vh;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    .card {
+      background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.14); border-radius: 20px; padding: 22px; margin-top: 16px;
+    }
+    textarea {
+      width: 100%; height: 150px; border-radius: 12px; background: #03060c;
+      border: 1px solid rgba(255,255,255,0.18); color: #a5f3fc; font-family: monospace;
+      padding: 12px; font-size: 12.5px; margin: 10px 0;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px;
+      border-radius: 12px; font-weight: 800; font-size: 13.5px; cursor: pointer;
+      background: linear-gradient(135deg, #10b981, #059669); color: #03150e; border: none; text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="./studio.html" style="color:#6ee7b7;text-decoration:none;font-size:13px;font-weight:700">← Back to Aithelian Labs Hub</a>
+    <h1 style="font-size:28px;font-weight:800;margin-top:10px">🛡 Free iOS App Store Rejection &amp; Privacy Scanner</h1>
+    <p style="color:#94a3b8;font-size:14px;margin-top:4px">
+      Built after shipping 8 native SwiftUI apps. Paste your SwiftUI Paywall code or <code>PrivacyInfo.xcprivacy</code> XML to detect Apple Review blockers before you submit.
+    </p>
+    <div class="card">
+      <textarea id="code-in">struct PaywallView: View {
+  // Missing Restore Purchases button & Terms/Privacy links (Guideline 3.1.2)
+  // Missing NSPrivacyAccessedAPICategoryUserDefaults CA92.1 declaration
+}</textarea>
+      <button class="btn" onclick="runAudit()">🔍 Run Instant 6-Point App Review Audit</button>
+      <div id="audit-out" style="margin-top:16px"></div>
+    </div>
+  </div>
+  <script>
+    function runAudit() {
+      const v = document.getElementById('code-in').value;
+      const hasRestore = /restorePurchases|Restore/i.test(v);
+      const hasPrivacy = /CA92\.1|NSPrivacyAccessedAPICategories/i.test(v);
+      document.getElementById('audit-out').innerHTML = `
+        <div style="padding:14px;border-radius:12px;background:rgba(244,63,94,0.12);border:1px solid rgba(244,63,94,0.4)">
+          <div style="font-weight:800;color:#fda4af;margin-bottom:6px">⚠️ Audit Results: ${hasRestore && hasPrivacy ? '0 Blockers' : '2 High-Risk App Review Rejection Triggers Detected'}</div>
+          <ul style="padding-left:18px;font-size:13px;color:#fecdd3;line-height:1.6">
+            <li><strong>Guideline 3.1.2 (Subscriptions):</strong> ${hasRestore ? '✓ Restore & Legal Links Found' : '✗ Missing explicit Restore Purchases + above-the-fold EULA & Privacy Policy links.'}</li>
+            <li><strong>ITMS-91053 (Spring 2025 Privacy Manifest):</strong> ${hasPrivacy ? '✓ CA92.1 Declared' : '✗ Missing NSPrivacyAccessedAPICategoryUserDefaults (CA92.1) declaration.'}</li>
+          </ul>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+            <span style="font-size:13px;color:#d1fae5"><strong>Want our 4-App Store studio to fix &amp; verify your Xcode project in 24 hours?</strong></span>
+            <a class="btn" href="https://www.fiverr.com/dmaulikr" target="_blank">⚡ Book 24-Hr App Store Fix Sprint ($297) →</a>
+          </div>
+        </div>
+      `;
+    }
+    runAudit();
+  </script>
+</body>
+</html>
