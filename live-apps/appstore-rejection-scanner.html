@@ -10,18 +10,19 @@
   .wrap { max-width: 980px; margin: 0 auto; }
   .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; background: rgba(56,189,248,0.16); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); }
   .card { background: rgba(15,23,42,0.92); border: 1px solid rgba(148,163,184,0.22); border-radius: 14px; padding: 18px; margin-top: 14px; }
-  textarea { width: 100%; min-height: 115px; border-radius: 10px; background: #060911; color: #e2e8f0; border: 1px solid #334155; padding: 12px; font-family: monospace; font-size: 12px; }
+  textarea { width: 100%; min-height: 140px; border-radius: 10px; background: #060911; color: #e2e8f0; border: 1px solid #334155; padding: 12px; font-family: monospace; font-size: 12px; }
   .btn { cursor: pointer; padding: 10px 16px; border-radius: 9px; border: none; font-weight: 800; font-size: 12.5px; background: #10b981; color: #04130d; margin-right: 8px; }
-  .row { padding: 10px 12px; border-radius: 9px; margin-top: 8px; font-size: 12.5px; display: flex; justify-content: space-between; align-items: center; }
+  .row { padding: 10px 12px; border-radius: 9px; margin-top: 8px; font-size: 12.5px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .pass { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.35); color: #d1fae5; }
   .fail { background: rgba(244,63,94,0.12); border: 1px solid rgba(244,63,94,0.35); color: #fecdd3; }
+  .note { font-size: 12px; color: #94a3b8; margin-top: 8px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <span class="badge">🟢 LIVE WEB UPDATED · PHASE 3 TWIN OF QuartetGrowthKit.swift + release_gate.py</span>
+  <span class="badge">🟢 LIVE · comments ignored · NSPrivacyAccessedAPITypeReasons required</span>
   <h1 style="margin:8px 0 4px;font-size:22px">🛡 App Store Guideline 3.1.2 &amp; ITMS-91053 Live Pre-Flight Scanner</h1>
-  <div style="font-size:13px;color:#94a3b8">Send this live interactive scanner to any rejected iOS founder on Fiverr (<code>FIV-01</code>) or Reddit/X — diagnoses their rejection and generates the Swift patch in 1 click.</div>
+  <div style="font-size:13px;color:#94a3b8">Helper for indie iOS founders — paste paywall Swift or PrivacyInfo.xcprivacy text. Checks ignore <code>//</code>, <code>/* */</code>, and <code>&lt;!-- --&gt;</code> comments. A hired audit still includes a human pass — see <a href="../audits.html" style="color:#38bdf8">Hire / Audits</a>.</div>
 
   <div class="card">
     <div style="font-size:12px;font-weight:800;color:#cbd5e1;margin-bottom:6px">PASTE CLIENT PAYWALL SWIFT CODE OR PRIVACYINFO.XCPRIVACY SNIPPET:</div>
@@ -29,33 +30,111 @@
 import StoreKit
 
 struct PaywallView: View {
-  // Tested with QuartetGrowthKit: Transaction.updates + AppStore.sync() + CA92.1 PrivacyInfo.xcprivacy
   var body: some View {
     Button("Restore Purchases") { Task { try? await AppStore.sync() } }
+    Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
+    Link("Terms of Use", destination: URL(string: "https://example.com/terms")!)
   }
-}</textarea>
+}
+
+Task {
+  for await _ in Transaction.updates { }
+}
+
+// PrivacyInfo.xcprivacy required-reason sample (keys below are live code, not a comment):
+<key>NSPrivacyAccessedAPITypeReasons</key>
+<array>
+  <string>CA92.1</string>
+</array></textarea>
     <div style="margin-top:10px">
-      <button class="btn" onclick="runScan('clean')">✅ Scan Patched QuartetGrowthKit Payload</button>
+      <button class="btn" onclick="runScan('clean')">✅ Scan Patched Payload</button>
       <button class="btn" style="background:#f43f5e;color:#fff" onclick="runScan('broken')">🚨 Simulate Broken Client App (Trigger 3.1.2 &amp; ITMS-91053)</button>
     </div>
+    <div class="note">ITMS-91053 now requires a real <code>NSPrivacyAccessedAPITypeReasons</code> entry outside comments (e.g. <code>CA92.1</code>). Comment-only mentions no longer pass.</div>
     <div id="results" style="margin-top:14px"></div>
   </div>
 </div>
 <script>
+/* Strip Swift line/block comments and XML/HTML comments (PrivacyInfo.plist). */
+function stripComments(src) {
+  let out = '';
+  let i = 0;
+  const n = src.length;
+  while (i < n) {
+    const c = src[i];
+    const n2 = src[i + 1];
+    // string literal — keep as-is so // inside strings is not treated as a comment
+    if (c === '"' || c === "'") {
+      const quote = c;
+      out += c;
+      i++;
+      while (i < n) {
+        if (src[i] === '\\\\') { out += src[i] + (src[i + 1] || ''); i += 2; continue; }
+        out += src[i];
+        if (src[i] === quote) { i++; break; }
+        i++;
+      }
+      continue;
+    }
+    // line comment
+    if (c === '/' && n2 === '/') {
+      i += 2;
+      while (i < n && src[i] !== '\\n') i++;
+      continue;
+    }
+    // block comment
+    if (c === '/' && n2 === '*') {
+      i += 2;
+      while (i + 1 < n && !(src[i] === '*' && src[i + 1] === '/')) i++;
+      i = Math.min(n, i + 2);
+      continue;
+    }
+    // XML / HTML comment
+    if (c === '<' && src.slice(i, i + 4) === '<!--') {
+      i += 4;
+      const end = src.indexOf('-->', i);
+      i = end === -1 ? n : end + 3;
+      continue;
+    }
+    out += c;
+    i++;
+  }
+  return out;
+}
+
 function runScan(mode) {
   if (mode === 'broken') {
-    document.getElementById('code-in').value = 'struct BrokenPaywall: View { var body: some View { Text("Subscribe $9.99/mo") } } // Missing Restore, Missing Terms/Privacy, Missing CA92.1';
-  } else {
-    document.getElementById('code-in').value = 'import SwiftUI\nimport StoreKit\n// QuartetGrowthKit.swift Verified: Transaction.updates + AppStore.sync() + PrivacyInfo.xcprivacy (CA92.1) + Terms/Privacy Links';
+    document.getElementById('code-in').value =
+      'struct BrokenPaywall: View {\\n' +
+      '  var body: some View { Text("Subscribe $9.99/mo") }\\n' +
+      '} // Missing Restore, Missing Terms/Privacy, Missing CA92.1 in a comment only\\n';
+  } else if (mode === 'clean') {
+    document.getElementById('code-in').value =
+      'import SwiftUI\\nimport StoreKit\\n\\n' +
+      'struct PaywallView: View {\\n' +
+      '  var body: some View {\\n' +
+      '    Button("Restore Purchases") { Task { try? await AppStore.sync() } }\\n' +
+      '    Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)\\n' +
+      '    Link("Terms of Use", destination: URL(string: "https://example.com/terms")!)\\n' +
+      '  }\\n}\\n\\n' +
+      'Task { for await _ in Transaction.updates { } }\\n\\n' +
+      '<key>NSPrivacyAccessedAPITypeReasons</key>\\n' +
+      '<array>\\n  <string>CA92.1</string>\\n</array>\\n';
   }
-  const v = document.getElementById('code-in').value;
-  const hasSync = v.includes('AppStore.sync') || v.includes('QuartetGrowthKit');
-  const hasPrivacy = v.includes('CA92.1') || v.includes('PrivacyInfo');
+  const raw = document.getElementById('code-in').value;
+  const v = stripComments(raw);
+  const hasSync = /AppStore\\.sync/.test(v);
+  const hasTermsPrivacy =
+    /(privacy|Privacy Policy)/i.test(v) && /(terms|Terms of Use)/i.test(v);
+  // Require a real reasons key plus a reason code (e.g. CA92.1) outside comments
+  const hasRequiredReason =
+    /NSPrivacyAccessedAPITypeReasons/.test(v) && /CA92\\.1/.test(v);
+  const hasTxUpdates = /Transaction\\.updates/.test(v);
   const checks = [
     { name: 'Guideline 3.1.2(a) — Explicit Restore Purchases Action (AppStore.sync())', ok: hasSync },
-    { name: 'Guideline 3.1.2(c) — Functional Privacy Policy & Terms of Use Links on Paywall', ok: hasSync },
-    { name: 'ITMS-91053 — PrivacyInfo.xcprivacy Required Reason API (CA92.1 UserDefaults)', ok: hasPrivacy },
-    { name: 'StoreKit 2 Entitlement Listener — Transaction.updates Background Task', ok: hasSync },
+    { name: 'Guideline 3.1.2(c) — Functional Privacy Policy & Terms of Use Links on Paywall', ok: hasTermsPrivacy },
+    { name: 'ITMS-91053 — PrivacyInfo.xcprivacy Required Reason API (NSPrivacyAccessedAPITypeReasons + CA92.1)', ok: hasRequiredReason },
+    { name: 'StoreKit 2 Entitlement Listener — Transaction.updates Background Task', ok: hasTxUpdates },
   ];
   document.getElementById('results').innerHTML = checks.map(c =>
     `<div class="row ${c.ok ? 'pass' : 'fail'}"><strong>${c.name}</strong><span>${c.ok ? '🟢 PASS (Verified)' : '🔴 REJECTION RISK — Fix Ready ($495 Sprint)'}</span></div>`
